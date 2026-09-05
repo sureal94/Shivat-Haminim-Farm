@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
-import { Mail, MapPin, Phone } from 'lucide-react'
+import { Facebook, Instagram, Mail, MapPin, Phone } from 'lucide-react'
 import { useLanguage } from '../i18n/LanguageContext'
 import Logo from './Logo'
 import Button from './Button'
 
 export default function Footer() {
   const { content: { navLinks, site }, t } = useLanguage()
+  const socialIcons = { Instagram, Facebook }
+
   return (
     <footer className="bg-forest text-cream">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
@@ -14,6 +16,23 @@ export default function Footer() {
           <p className="mt-5 text-sm leading-relaxed text-cream/80 max-w-xs">
             {site.shortMission}
           </p>
+          <div className="mt-5 flex items-center gap-2">
+            {site.social.map((profile) => {
+              const Icon = socialIcons[profile.name]
+              return (
+                <a
+                  key={profile.name}
+                  href={profile.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-cream transition hover:border-sand hover:bg-white/10 hover:text-sand"
+                  aria-label={`${profile.name} (${t('opensNewTab')})`}
+                >
+                  <Icon size={18} aria-hidden="true" />
+                </a>
+              )
+            })}
+          </div>
         </div>
         <div>
           <h2 className="font-display text-lg font-semibold mb-4">{t('explore')}</h2>

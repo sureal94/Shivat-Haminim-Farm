@@ -20,7 +20,16 @@ export const site = {
     email: 'shivat.haminim.farm@gmail.com',
     address: "Yavne'el, Israel",
   },
-  social: [],
+  social: [
+    {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/shivat.haminim.farm/',
+    },
+    {
+      name: 'Facebook',
+      url: 'https://www.facebook.com/profile.php?id=100070722451063',
+    },
+  ],
   donationUrl: import.meta.env.VITE_DONATION_URL || '',
   contactEndpoint: import.meta.env.VITE_CONTACT_ENDPOINT || '',
   siteUrl: import.meta.env.VITE_SITE_URL || 'https://www.example.com',
