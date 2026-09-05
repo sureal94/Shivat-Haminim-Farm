@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { site } from '../data/siteContent'
+import { useLanguage } from '../i18n/LanguageContext'
 
 let cachedSrc
 
@@ -28,6 +28,7 @@ function removeBlackBackground(src) {
 }
 
 export default function Logo({ compact = false, className = '' }) {
+  const { content: { site } } = useLanguage()
   const [src, setSrc] = useState(cachedSrc || '/logo.png')
 
   useEffect(() => {

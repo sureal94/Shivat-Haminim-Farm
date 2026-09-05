@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Mail, MapPin, Phone } from 'lucide-react'
-import { navLinks, site } from '../data/siteContent'
+import { useLanguage } from '../i18n/LanguageContext'
 import Logo from './Logo'
 import Button from './Button'
 
 export default function Footer() {
+  const { content: { navLinks, site }, t } = useLanguage()
   return (
     <footer className="bg-forest text-cream">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
@@ -15,7 +16,7 @@ export default function Footer() {
           </p>
         </div>
         <div>
-          <h2 className="font-display text-lg font-semibold mb-4">Explore</h2>
+          <h2 className="font-display text-lg font-semibold mb-4">{t('explore')}</h2>
           <ul className="space-y-2 text-sm">
             {navLinks.map((link) => (
               <li key={link.to}>
@@ -27,7 +28,7 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h2 className="font-display text-lg font-semibold mb-4">Visit</h2>
+          <h2 className="font-display text-lg font-semibold mb-4">{t('visit')}</h2>
           <ul className="space-y-3 text-sm text-cream/85">
             <li className="flex gap-3">
               <MapPin size={18} className="shrink-0 mt-0.5" aria-hidden="true" />
@@ -39,32 +40,32 @@ export default function Footer() {
             </li>
             <li className="flex gap-3">
               <Phone size={18} className="shrink-0 mt-0.5" aria-hidden="true" />
-              <a href={`tel:${site.contact.phoneTel}`} className="hover:text-sand">
+              <a dir="ltr" href={`tel:${site.contact.phoneTel}`} className="hover:text-sand">
                 {site.contact.phoneDisplay}
               </a>
             </li>
             <li className="flex gap-3">
               <Mail size={18} className="shrink-0 mt-0.5" aria-hidden="true" />
-              <a href={`mailto:${site.contact.email}`} className="hover:text-sand break-all">
+              <a dir="ltr" href={`mailto:${site.contact.email}`} className="hover:text-sand break-all">
                 {site.contact.email}
               </a>
             </li>
           </ul>
         </div>
         <div>
-          <h2 className="font-display text-lg font-semibold mb-4">Support the farm</h2>
+          <h2 className="font-display text-lg font-semibold mb-4">{t('supportFarm')}</h2>
           <p className="text-sm text-cream/80 mb-5">
-            Help us grow accessible gardens, meaningful work, and a community where everyone belongs.
+            {t('supportText')}
           </p>
-          <Button to="/donate" variant="cream">Donate</Button>
+          <Button to="/donate" variant="cream">{t('donate')}</Button>
         </div>
       </div>
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-5 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-cream/70">
           <p>© {new Date().getFullYear()} {site.name}. {site.hebrewName}.</p>
           <div className="flex gap-4">
-            <Link to="/privacy" className="hover:text-sand">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-sand">Terms</Link>
+            <Link to="/privacy" className="hover:text-sand">{t('privacy')}</Link>
+            <Link to="/terms" className="hover:text-sand">{t('terms')}</Link>
           </div>
         </div>
       </div>

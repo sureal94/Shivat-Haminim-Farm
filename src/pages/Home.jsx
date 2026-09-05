@@ -8,14 +8,12 @@ import ProjectCard from '../components/ProjectCard'
 import GalleryGrid from '../components/GalleryGrid'
 import CTASection from '../components/CTASection'
 import Button from '../components/Button'
-import { home, seo } from '../data/siteContent'
 import { farmImages } from '../data/images'
-import { projects } from '../data/projects'
-import { galleryItems } from '../data/gallery'
-
-const galleryPreview = galleryItems.slice(0, 8)
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Home() {
+  const { content: { home, seo }, projects, galleryItems, t } = useLanguage()
+  const galleryPreview = galleryItems.slice(0, 8)
   return (
     <>
       <Seo title={seo.home.title} description={seo.home.description} path="/" />
@@ -33,7 +31,7 @@ export default function Home() {
           <div className="bg-cream relative min-h-[20rem] lg:min-h-0">
             <img
               src={farmImages.welcome}
-              alt="Hands-on growing at Shivat Haminim Farm"
+              alt={galleryItems[1].alt}
               className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
@@ -81,7 +79,7 @@ export default function Home() {
             />
             <img
               src={farmImages.accessibility}
-              alt="Time outdoors at Shivat Haminim Farm"
+              alt={galleryItems[2].alt}
               className="relative z-10 w-full object-cover organic-blob shadow-soft"
             />
           </FadeIn>
@@ -163,7 +161,7 @@ export default function Home() {
           <SectionHeader heading={home.gallery.heading} />
           <GalleryGrid items={galleryPreview} />
           <div className="mt-10 text-center">
-            <Button to="/gallery">View Full Gallery</Button>
+            <Button to="/gallery">{t('viewGallery')}</Button>
           </div>
         </div>
       </section>

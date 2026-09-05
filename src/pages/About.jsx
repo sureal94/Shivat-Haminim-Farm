@@ -1,12 +1,12 @@
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import FadeIn from '../components/FadeIn'
-import { about, seo } from '../data/siteContent'
 import { farmImages } from '../data/images'
-
-const sections = [about.who, about.why, about.vision]
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function About() {
+  const { content: { about, seo } } = useLanguage()
+  const sections = [about.who, about.why, about.vision]
   return (
     <>
       <Seo title={seo.about.title} description={seo.about.description} path="/about" />

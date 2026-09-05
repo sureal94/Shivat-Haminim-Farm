@@ -1,13 +1,17 @@
 import Button from './Button'
 import FadeIn from './FadeIn'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function CTASection({
   heading,
   text,
   image,
-  primary = { label: 'Donate', to: '/donate' },
-  secondary = { label: 'Get Involved', to: '/ways-to-help' },
+  primary,
+  secondary,
 }) {
+  const { t } = useLanguage()
+  const primaryAction = primary || { label: t('donate'), to: '/donate' }
+  const secondaryAction = secondary || { label: t('involved'), to: '/ways-to-help' }
   return (
     <section className="relative overflow-hidden">
       <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover" />
@@ -19,8 +23,8 @@ export default function CTASection({
           </h2>
           <p className="mt-5 text-lg text-cream/90 leading-relaxed">{text}</p>
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
-            <Button to={primary.to} variant="terracotta">{primary.label}</Button>
-            <Button to={secondary.to} variant="ghost">{secondary.label}</Button>
+            <Button to={primaryAction.to} variant="terracotta">{primaryAction.label}</Button>
+            <Button to={secondaryAction.to} variant="ghost">{secondaryAction.label}</Button>
           </div>
         </FadeIn>
       </div>

@@ -3,11 +3,12 @@ import PageHero from '../components/PageHero'
 import EventCard from '../components/EventCard'
 import Button from '../components/Button'
 import FadeIn from '../components/FadeIn'
-import { eventsPage, seo } from '../data/siteContent'
 import { events } from '../data/events'
 import { farmImages } from '../data/images'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Events() {
+  const { content: { eventsPage, seo }, t } = useLanguage()
   return (
     <>
       <Seo title={seo.events.title} description={seo.events.description} path="/events" />
@@ -24,7 +25,7 @@ export default function Events() {
               <div className="rounded-3xl bg-white border border-sand/70 p-8 sm:p-12 text-center shadow-soft">
                 <p className="text-lg text-muted leading-relaxed">{eventsPage.empty}</p>
                 <div className="mt-8">
-                  <Button to="/contact">Contact Us About a Visit</Button>
+                  <Button to="/contact">{t('contactVisit')}</Button>
                 </div>
               </div>
             </FadeIn>

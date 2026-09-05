@@ -2,35 +2,36 @@ import { useMemo, useState } from 'react'
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import GalleryGrid from '../components/GalleryGrid'
-import { seo } from '../data/siteContent'
 import { farmImages } from '../data/images'
-import { galleryFilters, galleryItems } from '../data/gallery'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Gallery() {
-  const [filter, setFilter] = useState('All')
+  const { content: { seo }, galleryFilters, galleryItems, t } = useLanguage()
+  const [filter, setFilter] = useState(galleryFilters[0])
+  const activeFilter = galleryFilters.includes(filter) ? filter : galleryFilters[0]
 
   const items = useMemo(
     () =>
-      filter === 'All'
+      activeFilter === galleryFilters[0]
         ? galleryItems
-        : galleryItems.filter((item) => item.category === filter),
-    [filter],
+        : galleryItems.filter((item) => item.category === activeFilter),
+    [activeFilter, galleryFilters, galleryItems],
   )
 
   return (
     <>
       <Seo title={seo.gallery.title} description={seo.gallery.description} path="/gallery" />
       <PageHero
-        heading="Gallery"
-        text="A look at life, growing, and community at Shivat Haminim Farm."
+        heading={t('galleryHeading')}
+        text={t('galleryText')}
         image={farmImages.hero}
       />
 
       <section className="bg-cream py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label="Filter gallery">
+          <div className="flex flex-wrap justify-center gap-2 mb-10" role="group" aria-label={t('filterGallery')}>
             {galleryFilters.map((label) => {
-              const active = filter === label
+              const active = activeFilter === label
               return (
                 <button
                   key={label}

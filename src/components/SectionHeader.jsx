@@ -1,7 +1,7 @@
 import FadeIn from './FadeIn'
 
 export default function SectionHeader({ eyebrow, heading, text, align = 'center', light = false }) {
-  const alignClass = align === 'left' ? 'text-left max-w-2xl' : 'text-center mx-auto max-w-3xl'
+  const alignClass = align === 'left' ? 'text-start max-w-2xl' : 'text-center mx-auto max-w-3xl'
 
   return (
     <FadeIn className={`${alignClass} mb-10 md:mb-14`}>

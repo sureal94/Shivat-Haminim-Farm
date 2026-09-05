@@ -41,6 +41,24 @@ body {
   background: #ffffff;
   line-height: 1.7;
   overflow-x: hidden;
+  text-align: start;
+}
+
+html[lang="he"] body {
+  font-family: "Assistant", ui-sans-serif, system-ui, sans-serif;
+}
+
+html[lang="he"] h1,
+html[lang="he"] h2,
+html[lang="he"] h3,
+html[lang="he"] h4,
+html[lang="he"] .font-display {
+  font-family: "Assistant", ui-sans-serif, system-ui, sans-serif;
+}
+
+html[lang="he"] .uppercase {
+  text-transform: none;
+  letter-spacing: 0.02em;
 }
 
 h1,
@@ -62,7 +80,7 @@ h4,
 
 .skip-link {
   position: absolute;
-  left: 1rem;
+  inset-inline-start: 1rem;
   top: -4rem;
   z-index: 100;
   border-radius: 999px;

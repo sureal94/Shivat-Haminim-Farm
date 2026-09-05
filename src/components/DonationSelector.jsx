@@ -1,7 +1,10 @@
+import { useLanguage } from '../i18n/LanguageContext'
+
 export default function DonationSelector({ amounts, selected, custom, onSelect, onCustom }) {
+  const { t } = useLanguage()
   return (
     <fieldset>
-      <legend className="font-display text-lg font-semibold text-forest mb-4">Donation amount</legend>
+      <legend className="font-display text-lg font-semibold text-forest mb-4">{t('amount')}</legend>
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         {amounts.map((amount) => {
           const active = selected === amount && !custom
@@ -17,7 +20,7 @@ export default function DonationSelector({ amounts, selected, custom, onSelect, 
               }`}
               aria-pressed={active}
             >
-              ${amount}
+              <span dir="ltr">${amount}</span>
             </button>
           )
         })}
@@ -31,20 +34,21 @@ export default function DonationSelector({ amounts, selected, custom, onSelect, 
           }`}
           aria-pressed={selected === 'custom'}
         >
-          Custom
+          {t('custom')}
         </button>
       </div>
       {selected === 'custom' ? (
         <label className="mt-4 block">
-          <span className="sr-only">Custom donation amount</span>
+          <span className="sr-only">{t('customAmount')}</span>
           <input
             type="number"
             min="1"
             inputMode="decimal"
             value={custom}
             onChange={(e) => onCustom(e.target.value)}
-            placeholder="Enter amount"
-            className="mt-2 w-full rounded-2xl border border-sand bg-white px-4 py-3"
+            placeholder={t('enterAmount')}
+            dir="ltr"
+            className="mt-2 w-full rounded-2xl border border-sand bg-white px-4 py-3 text-left"
           />
         </label>
       ) : null}

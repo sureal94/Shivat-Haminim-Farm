@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { NavLink } from 'react-router-dom'
-import { X } from 'lucide-react'
+import { Globe, X } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { navLinks } from '../data/siteContent'
+import { useLanguage } from '../i18n/LanguageContext'
 import Button from './Button'
 
 export default function MobileMenu({ open, onClose }) {
+  const { content: { navLinks }, t, toggleLanguage } = useLanguage()
   const reduce = useReducedMotion()
 
   useEffect(() => {
@@ -40,12 +41,12 @@ export default function MobileMenu({ open, onClose }) {
           <button
             type="button"
             className="absolute inset-0 bg-forest/50"
-            aria-label="Close menu"
+            aria-label={t('closeMenu')}
             onClick={onClose}
           />
           <motion.nav
             id="mobile-menu"
-            aria-label="Mobile"
+            aria-label={t('mobileNav')}
             className="absolute inset-0 flex h-dvh w-full flex-col bg-cream px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]"
             initial={reduce ? false : { y: 16, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -53,11 +54,11 @@ export default function MobileMenu({ open, onClose }) {
             transition={{ duration: 0.25, ease: 'easeOut' }}
           >
             <div className="flex items-center justify-between gap-3 pb-4">
-              <p className="font-display text-lg font-semibold text-forest">Menu</p>
+              <p className="font-display text-lg font-semibold text-forest">{t('menu')}</p>
               <button
                 type="button"
                 className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-forest shadow-soft"
-                aria-label="Close menu"
+                aria-label={t('closeMenu')}
                 onClick={onClose}
               >
                 <X size={24} />
@@ -82,9 +83,19 @@ export default function MobileMenu({ open, onClose }) {
               ))}
             </ul>
 
-            <Button to="/donate" variant="terracotta" className="mt-4 w-full" onClick={onClose}>
-              Donate
-            </Button>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => { toggleLanguage(); onClose() }}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-forest text-sm font-semibold text-forest"
+                aria-label={t('switchLanguage')}
+              >
+                <Globe size={18} aria-hidden="true" /> {t('languageOption')}
+              </button>
+              <Button to="/donate" variant="terracotta" className="w-full" onClick={onClose}>
+                {t('donate')}
+              </Button>
+            </div>
           </motion.nav>
         </motion.div>
       ) : null}

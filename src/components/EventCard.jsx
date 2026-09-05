@@ -1,7 +1,9 @@
 import { Calendar, Clock, MapPin } from 'lucide-react'
 import Button from './Button'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function EventCard({ event }) {
+  const { t } = useLanguage()
   return (
     <article className="rounded-3xl border border-sand/70 bg-white p-6 shadow-soft">
       {event.date ? (
@@ -26,7 +28,7 @@ export default function EventCard({ event }) {
       </div>
       {event.cta ? (
         <Button to={event.cta.to || '/contact'} className="mt-6">
-          {event.cta.label || 'Register'}
+          {event.cta.label || t('register')}
         </Button>
       ) : null}
     </article>

@@ -1,15 +1,17 @@
 import { ChevronDown } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import Button from './Button'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Hero({ image, heading, text, primaryCta, secondaryCta }) {
+  const { t } = useLanguage()
   const reduce = useReducedMotion()
 
   return (
     <section className="relative min-h-[88vh] flex items-end overflow-hidden">
       <img
         src={image}
-        alt="People and land at Shivat Haminim Farm"
+        alt={t('heroAlt')}
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-forest/45 to-forest/15" />
@@ -41,7 +43,7 @@ export default function Hero({ image, heading, text, primaryCta, secondaryCta })
       <a
         href="#welcome"
         className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 hover:text-white"
-        aria-label="Scroll to introduction"
+        aria-label={t('scrollIntro')}
       >
         <ChevronDown className="motion-safe:animate-bounce" />
       </a>

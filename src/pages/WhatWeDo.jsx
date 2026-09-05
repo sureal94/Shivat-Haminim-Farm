@@ -1,8 +1,8 @@
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import FadeIn from '../components/FadeIn'
-import { seo, whatWeDo } from '../data/siteContent'
 import { farmImages } from '../data/images'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const sectionImages = [
   farmImages.planting,
@@ -15,13 +15,14 @@ const sectionImages = [
 ]
 
 export default function WhatWeDo() {
+  const { content: { seo, whatWeDo }, direction } = useLanguage()
   return (
     <>
       <Seo title={seo.whatWeDo.title} description={seo.whatWeDo.description} path="/what-we-do" />
       <PageHero heading={whatWeDo.hero.heading} text={whatWeDo.hero.text} image={farmImages.planting} />
 
       {whatWeDo.sections.map((section, i) => {
-        const imageLeft = i % 2 === 0
+        const imageLeft = (i % 2 === 0) !== (direction === 'rtl')
         return (
           <section
             key={section.id}

@@ -2,8 +2,10 @@ import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Layout() {
+  const { t } = useLanguage()
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <a href="#main" className="skip-link">Skip to content</a>
+      <a href="#main" className="skip-link">{t('skip')}</a>
       <Navbar />
       <main id="main" className="flex-1">
         <Outlet />

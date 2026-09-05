@@ -4,11 +4,11 @@ import PageHero from '../components/PageHero'
 import FadeIn from '../components/FadeIn'
 import SectionHeader from '../components/SectionHeader'
 import DonationForm from '../components/DonationForm'
-import { donate, seo, site } from '../data/siteContent'
 import { farmImages } from '../data/images'
-import { projects } from '../data/projects'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Donate() {
+  const { content: { donate, seo, site }, projects, t } = useLanguage()
   const { hash } = useLocation()
   const projectId = hash.replace('#', '')
   const selectedProject = projects.find((project) => project.id === projectId)
@@ -36,8 +36,8 @@ export default function Donate() {
       <section className="bg-cream py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeader
-            heading="Projects your gift can support"
-            text="Choose a project to learn more, then use the form below. Online payment is only available if a donation provider has been connected."
+            heading={t('projectsHeading')}
+            text={t('projectsText')}
           />
           <div className="grid gap-6 sm:grid-cols-2">
             {projects.map((project, i) => (
@@ -70,22 +70,21 @@ export default function Donate() {
         <div className="mx-auto max-w-xl px-4 sm:px-6">
           <FadeIn>
             <h2 className="font-display text-3xl font-bold text-forest text-center">
-              Make a gift
+              {t('makeGift')}
             </h2>
             <p className="mt-4 text-center text-muted leading-relaxed">
               {site.donationUrl
                 ? selectedProject
-                  ? `This form will send you to the donation page, noting ${selectedProject.title}.`
-                  : 'This form will send you to the connected donation page.'
-                : 'Online payment is not connected on this website yet. The form below will not charge a card or process a gift until VITE_DONATION_URL is set. In the meantime, please email the farm to give.'}
+                  ? t('projectRedirect', { project: selectedProject.title })
+                  : t('donationRedirect')
+                : t('donationUnavailable')}
             </p>
             {!site.donationUrl ? (
               <p className="mt-3 text-center text-sm text-earth">
-                Write to{' '}
-                <a className="underline font-semibold" href={`mailto:${site.contact.email}`}>
+                {t('writeToGive')}{' '}
+                <a dir="ltr" className="underline font-semibold" href={`mailto:${site.contact.email}`}>
                   {site.contact.email}
-                </a>{' '}
-                if you would like to support the farm now.
+                </a>
               </p>
             ) : null}
             <div className="mt-8">

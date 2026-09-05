@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { site } from '../data/siteContent'
 import { ogImage } from '../data/images'
+import { useLanguage } from '../i18n/LanguageContext'
 
 function upsertMeta(attr, key, content) {
   if (!content) return
@@ -24,6 +24,7 @@ function upsertLink(rel, href) {
 }
 
 export default function Seo({ title, description, path = '/', image = ogImage }) {
+  const { content: { site }, language } = useLanguage()
   useEffect(() => {
     const url = `${site.siteUrl.replace(/\/$/, '')}${path}`
     document.title = title
@@ -34,12 +35,13 @@ export default function Seo({ title, description, path = '/', image = ogImage })
     upsertMeta('property', 'og:url', url)
     upsertMeta('property', 'og:type', 'website')
     upsertMeta('property', 'og:site_name', site.name)
+    upsertMeta('property', 'og:locale', language === 'he' ? 'he_IL' : 'en_US')
     upsertMeta('name', 'twitter:card', 'summary_large_image')
     upsertMeta('name', 'twitter:title', title)
     upsertMeta('name', 'twitter:description', description)
     upsertMeta('name', 'twitter:image', image)
     upsertLink('canonical', url)
-  }, [title, description, path, image])
+  }, [title, description, path, image, site, language])
 
   return null
 }

@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { donate, site } from '../data/siteContent'
+import { useLanguage } from '../i18n/LanguageContext'
 import DonationSelector from './DonationSelector'
 import Button from './Button'
 
 export default function DonationForm({ projectId }) {
+  const { content: { donate, site }, t } = useLanguage()
   const [selected, setSelected] = useState(50)
   const [custom, setCustom] = useState('')
   const [anonymous, setAnonymous] = useState(false)
@@ -31,9 +32,7 @@ export default function DonationForm({ projectId }) {
     <form onSubmit={onSubmit} className="rounded-3xl bg-white border border-sand/70 p-6 sm:p-8 shadow-soft space-y-6">
       {!site.donationUrl ? (
         <div className="rounded-2xl bg-cream border border-sand px-4 py-3 text-sm text-earth" role="status">
-          Payment is not connected yet. Set <code className="font-semibold">VITE_DONATION_URL</code> in
-          a <code className="font-semibold">.env</code> file before going live. This form collects
-          the gift details, but will not process a payment until that URL is added.
+          {t('paymentConfig')}
         </div>
       ) : null}
 
@@ -46,7 +45,7 @@ export default function DonationForm({ projectId }) {
       />
 
       <label className="block">
-        <span className="text-sm font-medium text-forest">Name</span>
+        <span className="text-sm font-medium text-forest">{t('name')}</span>
         <input
           name="name"
           type="text"
@@ -57,18 +56,19 @@ export default function DonationForm({ projectId }) {
       </label>
 
       <label className="block">
-        <span className="text-sm font-medium text-forest">Email</span>
+        <span className="text-sm font-medium text-forest">{t('email')}</span>
         <input
           name="email"
           type="email"
           required
           autoComplete="email"
-          className="mt-2 w-full rounded-2xl border border-sand px-4 py-3"
+          dir="ltr"
+          className="mt-2 w-full rounded-2xl border border-sand px-4 py-3 text-left"
         />
       </label>
 
       <label className="block">
-        <span className="text-sm font-medium text-forest">Optional message</span>
+        <span className="text-sm font-medium text-forest">{t('optionalMessage')}</span>
         <textarea name="message" rows="4" className="mt-2 w-full rounded-2xl border border-sand px-4 py-3" />
       </label>
 
@@ -79,20 +79,17 @@ export default function DonationForm({ projectId }) {
           onChange={(e) => setAnonymous(e.target.checked)}
           className="h-4 w-4 accent-forest"
         />
-        Give anonymously
+        {t('anonymous')}
       </label>
 
       <Button type="submit" variant="terracotta" className="w-full">
-        {ready ? `Donate $${amount}` : 'Donate'}
+        {ready ? <>{t('donateAmount')} <span dir="ltr">${amount}</span></> : t('donate')}
       </Button>
 
       {status === 'unconfigured' ? (
         <p className="text-sm text-earth" role="alert">
-          The donation provider still needs to be connected. Please email{' '}
-          <a className="underline" href={`mailto:${site.contact.email}`}>
-            {site.contact.email}
-          </a>{' '}
-          to give in the meantime.
+          {t('providerMissing')}{' '}
+          <a dir="ltr" className="underline" href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
         </p>
       ) : null}
     </form>

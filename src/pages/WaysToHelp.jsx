@@ -2,10 +2,11 @@ import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import FadeIn from '../components/FadeIn'
 import Button from '../components/Button'
-import { seo, waysToHelp } from '../data/siteContent'
 import { farmImages } from '../data/images'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function WaysToHelp() {
+  const { content: { seo, waysToHelp }, t } = useLanguage()
   return (
     <>
       <Seo title={seo.waysToHelp.title} description={seo.waysToHelp.description} path="/ways-to-help" />
@@ -44,7 +45,7 @@ export default function WaysToHelp() {
             <h2 className="font-display text-3xl font-bold text-forest">{waysToHelp.donate.heading}</h2>
             <p className="mt-5 text-lg text-muted leading-relaxed">{waysToHelp.donate.text}</p>
             <div className="mt-8">
-              <Button to="/donate">Donate</Button>
+              <Button to="/donate">{t('donate')}</Button>
             </div>
           </FadeIn>
         </div>
@@ -56,7 +57,7 @@ export default function WaysToHelp() {
             <h2 className="font-display text-3xl font-bold text-forest">{waysToHelp.visit.heading}</h2>
             <p className="mt-5 text-lg text-muted leading-relaxed">{waysToHelp.visit.text}</p>
             <div className="mt-8">
-              <Button to="/contact">Plan a Visit</Button>
+              <Button to="/contact">{t('planVisit')}</Button>
             </div>
           </FadeIn>
         </div>
@@ -70,7 +71,7 @@ export default function WaysToHelp() {
             </h2>
             <p className="mt-5 text-lg text-muted leading-relaxed">{waysToHelp.partnerships.text}</p>
             <div className="mt-8">
-              <Button to="/contact">Talk About a Partnership</Button>
+              <Button to="/contact">{t('partnership')}</Button>
             </div>
           </FadeIn>
         </div>
@@ -82,7 +83,7 @@ export default function WaysToHelp() {
             <h2 className="font-display text-3xl font-bold text-forest">{waysToHelp.other.heading}</h2>
             <p className="mt-5 text-lg text-muted leading-relaxed">{waysToHelp.other.text}</p>
             <div className="mt-8">
-              <Button to="/contact">Get in Touch</Button>
+              <Button to="/contact">{t('getInTouch')}</Button>
             </div>
           </FadeIn>
         </div>

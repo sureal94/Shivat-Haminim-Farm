@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
-import { navLinks } from '../data/siteContent'
+import { Globe, Menu, X } from 'lucide-react'
+import { useLanguage } from '../i18n/LanguageContext'
 import Logo from './Logo'
 import Button from './Button'
 import MobileMenu from './MobileMenu'
 
 export default function Navbar() {
+  const { content: { navLinks }, t, toggleLanguage } = useLanguage()
   const [compact, setCompact] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -39,7 +40,7 @@ export default function Navbar() {
       >
         <Logo compact={compact} />
 
-        <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-1" aria-label={t('primaryNav')}>
           {navLinks
             .filter((link) => link.to !== '/donate')
             .map((link) => (
@@ -59,14 +60,23 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button to="/donate" variant="terracotta" className="hidden sm:inline-flex px-5">
-            Donate
+            {t('donate')}
           </Button>
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            className="hidden lg:inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold text-forest hover:bg-white"
+            aria-label={t('switchLanguage')}
+          >
+            <Globe size={18} aria-hidden="true" />
+            <span>{t('languageOption')}</span>
+          </button>
           <button
             type="button"
             className="lg:hidden inline-flex h-12 w-12 items-center justify-center rounded-full text-forest hover:bg-white"
             aria-expanded={open}
             aria-controls="mobile-menu"
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? t('closeMenu') : t('openMenu')}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X size={24} /> : <Menu size={24} />}

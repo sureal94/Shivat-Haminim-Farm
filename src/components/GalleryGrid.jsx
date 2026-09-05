@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Lightbox from './Lightbox'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function GalleryGrid({ items, masonry = true }) {
+  const { t } = useLanguage()
   const [index, setIndex] = useState(null)
 
   return (
@@ -12,8 +14,8 @@ export default function GalleryGrid({ items, masonry = true }) {
             <button
               type="button"
               onClick={() => setIndex(i)}
-              className="group block w-full overflow-hidden rounded-2xl bg-sand/40 text-left"
-              aria-label={`Open image: ${item.alt}`}
+              className="group block w-full overflow-hidden rounded-2xl bg-sand/40 text-start"
+              aria-label={t('openImage', { alt: item.alt })}
             >
               <img
                 src={item.src}
@@ -27,7 +29,7 @@ export default function GalleryGrid({ items, masonry = true }) {
                 }}
               />
               <span hidden className="flex aspect-[4/3] items-center justify-center bg-sand text-earth text-sm">
-                Image coming soon
+                {t('imageComing')}
               </span>
             </button>
           </li>

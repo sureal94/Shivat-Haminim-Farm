@@ -3,10 +3,11 @@ import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import ContactForm from '../components/ContactForm'
 import FadeIn from '../components/FadeIn'
-import { contact, seo, site } from '../data/siteContent'
 import { farmImages } from '../data/images'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Contact() {
+  const { content: { contact, seo, site }, t } = useLanguage()
   return (
     <>
       <Seo title={seo.contact.title} description={seo.contact.description} path="/contact" />
@@ -15,7 +16,7 @@ export default function Contact() {
       <section className="bg-cream py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 grid lg:grid-cols-2 gap-10 lg:gap-16">
           <FadeIn>
-            <h2 className="font-display text-3xl font-bold text-forest">Get in touch</h2>
+            <h2 className="font-display text-3xl font-bold text-forest">{t('contactHeading')}</h2>
             <p className="mt-4 text-muted leading-relaxed">
               {site.location.cityHebrew} · {site.location.city}
               <br />
@@ -30,8 +31,8 @@ export default function Contact() {
                 >
                   <Phone className="text-forest shrink-0 mt-0.5" size={22} aria-hidden="true" />
                   <span>
-                    <span className="block text-sm font-semibold text-earth">Phone</span>
-                    <span className="text-forest font-medium">{site.contact.phoneDisplay}</span>
+                    <span className="block text-sm font-semibold text-earth">{t('phone')}</span>
+                    <span dir="ltr" className="text-forest font-medium">{site.contact.phoneDisplay}</span>
                   </span>
                 </a>
               </li>
@@ -44,8 +45,8 @@ export default function Contact() {
                 >
                   <MessageCircle className="text-forest shrink-0 mt-0.5" size={22} aria-hidden="true" />
                   <span>
-                    <span className="block text-sm font-semibold text-earth">WhatsApp</span>
-                    <span className="text-forest font-medium">{site.contact.whatsappDisplay}</span>
+                    <span className="block text-sm font-semibold text-earth">{t('whatsapp')}</span>
+                    <span dir="ltr" className="text-forest font-medium">{site.contact.whatsappDisplay}</span>
                   </span>
                 </a>
               </li>
@@ -56,15 +57,15 @@ export default function Contact() {
                 >
                   <Mail className="text-forest shrink-0 mt-0.5" size={22} aria-hidden="true" />
                   <span>
-                    <span className="block text-sm font-semibold text-earth">Email</span>
-                    <span className="text-forest font-medium break-all">{site.contact.email}</span>
+                    <span className="block text-sm font-semibold text-earth">{t('email')}</span>
+                    <span dir="ltr" className="text-forest font-medium break-all">{site.contact.email}</span>
                   </span>
                 </a>
               </li>
               <li className="flex items-start gap-4 rounded-2xl bg-white border border-sand/70 p-4">
                 <MapPin className="text-forest shrink-0 mt-0.5" size={22} aria-hidden="true" />
                 <span>
-                  <span className="block text-sm font-semibold text-earth">Address</span>
+                  <span className="block text-sm font-semibold text-earth">{t('address')}</span>
                   <span className="text-ink">{site.contact.address}</span>
                 </span>
               </li>
@@ -72,7 +73,7 @@ export default function Contact() {
 
             <div className="mt-8 overflow-hidden rounded-3xl border border-sand/70 bg-white shadow-soft">
               <iframe
-                title={`Map of ${site.name} in ${site.location.city}`}
+                title={t('mapTitle', { farm: site.name, city: site.location.city })}
                 src={site.location.mapEmbed}
                 className="w-full h-72 border-0"
                 loading="lazy"
@@ -83,13 +84,13 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="block px-4 py-3 text-sm font-semibold text-forest hover:text-earth"
               >
-                Open in OpenStreetMap
+                {t('openMap')}
               </a>
             </div>
           </FadeIn>
 
           <FadeIn delay={0.1}>
-            <h2 className="font-display text-3xl font-bold text-forest mb-6">Send a message</h2>
+            <h2 className="font-display text-3xl font-bold text-forest mb-6">{t('sendHeading')}</h2>
             <ContactForm />
           </FadeIn>
         </div>

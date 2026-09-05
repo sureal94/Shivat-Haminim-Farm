@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
+import { useLanguage } from './i18n/LanguageContext'
 
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
@@ -15,9 +16,10 @@ const Terms = lazy(() => import('./pages/Terms'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 function PageFallback() {
+  const { t } = useLanguage()
   return (
     <div className="min-h-[50vh] flex items-center justify-center bg-cream text-muted">
-      Loading…
+      {t('loading')}
     </div>
   )
 }
