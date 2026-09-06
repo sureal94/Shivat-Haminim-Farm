@@ -1,40 +1,49 @@
 import { useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { FARM_EMAIL, openFarmMailto } from '../lib/farmEmail'
 import DonationSelector from './DonationSelector'
 import Button from './Button'
 
 export default function DonationForm({ projectId }) {
-  const { content: { donate, site }, t } = useLanguage()
+  const { content: { donate }, projects, t } = useLanguage()
   const [selected, setSelected] = useState(50)
   const [custom, setCustom] = useState('')
   const [anonymous, setAnonymous] = useState(false)
   const [status, setStatus] = useState(null)
 
   const amount = selected === 'custom' ? custom : selected
-  const ready = site.donationUrl && Number(amount) > 0
+  const ready = Number(amount) > 0
+  const selectedProject = projects.find((project) => project.id === projectId)
 
   const onSubmit = (e) => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
-    if (!site.donationUrl) {
-      setStatus('unconfigured')
+    if (!ready) {
+      setStatus('needAmount')
       return
     }
-    const url = new URL(site.donationUrl)
-    url.searchParams.set('amount', String(amount))
-    if (projectId) url.searchParams.set('project', projectId)
-    if (data.get('name') && !anonymous) url.searchParams.set('name', data.get('name'))
-    if (data.get('email')) url.searchParams.set('email', data.get('email'))
-    window.location.assign(url.toString())
+
+    const body = [
+      `${t('name')}: ${anonymous ? t('anonymous') : data.get('name') || ''}`,
+      `${t('email')}: ${data.get('email') || ''}`,
+      `${t('amount')}: $${amount}`,
+      selectedProject ? `${t('donationProject')}: ${selectedProject.title}` : null,
+      `${t('anonymous')}: ${anonymous ? t('yes') : t('no')}`,
+      '',
+      data.get('message') || '',
+    ]
+      .filter((line) => line !== null)
+      .join('\n')
+
+    openFarmMailto(t('donationMailSubject'), body)
+    setStatus('mailto')
   }
 
   return (
     <form onSubmit={onSubmit} className="rounded-3xl bg-white border border-sand/70 p-6 sm:p-8 shadow-soft space-y-6">
-      {!site.donationUrl ? (
-        <div className="rounded-2xl bg-cream border border-sand px-4 py-3 text-sm text-earth" role="status">
-          {t('paymentConfig')}
-        </div>
-      ) : null}
+      <div className="rounded-2xl bg-cream border border-sand px-4 py-3 text-sm text-earth" role="status">
+        {t('paymentConfig')}
+      </div>
 
       <DonationSelector
         amounts={donate.amounts}
@@ -82,15 +91,19 @@ export default function DonationForm({ projectId }) {
         {t('anonymous')}
       </label>
 
-      <Button type="submit" variant="terracotta" className="w-full">
+      <Button type="submit" variant="terracotta" className="w-full" disabled={!ready}>
         {ready ? <>{t('donateAmount')} <span dir="ltr">${amount}</span></> : t('donate')}
       </Button>
 
-      {status === 'unconfigured' ? (
-        <p className="text-sm text-earth" role="alert">
-          {t('providerMissing')}{' '}
-          <a dir="ltr" className="underline" href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+      {status === 'mailto' ? (
+        <p className="text-sm text-muted" role="status">
+          {t('mailOpened')}{' '}
+          <a dir="ltr" className="underline" href={`mailto:${FARM_EMAIL}`}>{FARM_EMAIL}</a>
         </p>
+      ) : null}
+
+      {status === 'needAmount' ? (
+        <p className="text-sm text-earth" role="alert">{t('enterAmount')}</p>
       ) : null}
     </form>
   )

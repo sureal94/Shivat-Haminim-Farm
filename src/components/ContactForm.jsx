@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { FARM_EMAIL, openFarmMailto } from '../lib/farmEmail'
 import Button from './Button'
 
 const empty = { name: '', email: '', phone: '', subject: '', message: '' }
@@ -24,21 +25,16 @@ export default function ContactForm() {
         const res = await fetch(site.contactEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(values),
+          body: JSON.stringify({ ...values, to: FARM_EMAIL }),
         })
         if (!res.ok) throw new Error('Request failed')
-        setStatus('success')
-        setValues(empty)
-        return
       } catch {
-        setStatus('error')
-        setError(t('failed'))
-        return
+        // The farm still receives the message through mailto below.
       }
     }
 
     const body = [`${t('name')}: ${values.name}`, `${t('email')}: ${values.email}`, `${t('phone')}: ${values.phone}`, '', values.message].join('\n')
-    window.location.href = `mailto:${site.contact.email}?subject=${encodeURIComponent(values.subject || t('mailSubject'))}&body=${encodeURIComponent(body)}`
+    openFarmMailto(values.subject || t('mailSubject'), body)
     setStatus('mailto')
   }
 
@@ -81,7 +77,7 @@ export default function ContactForm() {
       {status === 'mailto' ? (
         <p className="text-sm text-muted" role="status">
           {t('mailOpened')}{' '}
-          <a dir="ltr" className="underline" href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+          <a dir="ltr" className="underline" href={`mailto:${FARM_EMAIL}`}>{FARM_EMAIL}</a>
         </p>
       ) : null}
       {status === 'error' ? <p className="text-sm text-terracotta" role="alert">{error}</p> : null}

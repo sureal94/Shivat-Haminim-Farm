@@ -73,20 +73,16 @@ export default function Donate() {
               {t('makeGift')}
             </h2>
             <p className="mt-4 text-center text-muted leading-relaxed">
-              {site.donationUrl
-                ? selectedProject
-                  ? t('projectRedirect', { project: selectedProject.title })
-                  : t('donationRedirect')
+              {selectedProject
+                ? t('projectRedirect', { project: selectedProject.title })
                 : t('donationUnavailable')}
             </p>
-            {!site.donationUrl ? (
-              <p className="mt-3 text-center text-sm text-earth">
-                {t('writeToGive')}{' '}
-                <a dir="ltr" className="underline font-semibold" href={`mailto:${site.contact.email}`}>
-                  {site.contact.email}
-                </a>
-              </p>
-            ) : null}
+            <p className="mt-3 text-center text-sm text-earth">
+              {t('writeToGive')}{' '}
+              <a dir="ltr" className="underline font-semibold" href={`mailto:${site.contact.email}`}>
+                {site.contact.email}
+              </a>
+            </p>
             <div className="mt-8">
               <DonationForm projectId={selectedProject?.id} />
             </div>
