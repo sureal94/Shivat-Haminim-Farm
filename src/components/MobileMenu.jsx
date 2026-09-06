@@ -2,13 +2,14 @@ import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { Globe, X } from 'lucide-react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 import { useLanguage } from '../i18n/LanguageContext'
 import Button from './Button'
 
 export default function MobileMenu({ open, onClose }) {
   const { content: { navLinks }, t, toggleLanguage } = useLanguage()
-  const reduce = useReducedMotion()
+  const reduce = usePrefersReducedMotion()
 
   useEffect(() => {
     if (!open) return undefined

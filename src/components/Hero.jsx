@@ -1,11 +1,12 @@
 import { ChevronDown } from 'lucide-react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Button from './Button'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Hero({ image, heading, text, primaryCta, secondaryCta }) {
   const { t } = useLanguage()
-  const reduce = useReducedMotion()
+  const reduce = usePrefersReducedMotion()
 
   return (
     <section className="relative min-h-[88vh] flex items-end overflow-hidden">

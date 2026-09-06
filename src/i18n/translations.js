@@ -57,6 +57,24 @@ const en = {
   notFoundHeading: 'This path is still growing',
   notFoundText: 'We could not find that page. You are welcome to return home, or write to us if you were looking for a visit, volunteer day, or another way to connect with the farm.',
   backHome: 'Back Home', contactUs: 'Contact Us',
+  accessibility: {
+    open: 'Open Accessibility Settings',
+    close: 'Close Accessibility Settings',
+    tooltip: 'Accessibility',
+    title: 'Accessibility Settings',
+    subtitle: 'Customize your experience',
+    textSize: 'Text Size',
+    currentTextSize: 'Current size: {{size}}%',
+    increaseText: 'Increase Text Size',
+    decreaseText: 'Decrease Text Size',
+    highContrast: 'High Contrast',
+    grayscale: 'Grayscale',
+    highlightLinks: 'Highlight Links',
+    readableFont: 'Readable Font',
+    lineSpacing: 'Increase Line Spacing',
+    reduceMotion: 'Reduce Motion',
+    reset: 'Reset Settings',
+  },
 }
 
 const he = {
@@ -112,6 +130,24 @@ const he = {
   notFoundHeading: 'השביל הזה עדיין צומח',
   notFoundText: 'לא הצלחנו למצוא את העמוד. אפשר לחזור לעמוד הבית או לכתוב לנו אם חיפשתם ביקור, יום התנדבות או דרך אחרת להתחבר לחווה.',
   backHome: 'חזרה לעמוד הבית', contactUs: 'יצירת קשר',
+  accessibility: {
+    open: 'פתיחת הגדרות נגישות',
+    close: 'סגירת הגדרות נגישות',
+    tooltip: 'נגישות',
+    title: 'הגדרות נגישות',
+    subtitle: 'התאימו את חוויית הגלישה לצרכים שלכם',
+    textSize: 'גודל הטקסט',
+    currentTextSize: 'גודל נוכחי: {{size}}%',
+    increaseText: 'הגדלת טקסט',
+    decreaseText: 'הקטנת טקסט',
+    highContrast: 'ניגודיות גבוהה',
+    grayscale: 'גווני אפור',
+    highlightLinks: 'הדגשת קישורים',
+    readableFont: 'גופן קריא',
+    lineSpacing: 'הגדלת מרווח בין שורות',
+    reduceMotion: 'הפחתת תנועה',
+    reset: 'איפוס הגדרות',
+  },
 }
 
 export const translations = {

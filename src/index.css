@@ -118,3 +118,96 @@ h4,
   break-inside: avoid;
   margin-bottom: 1rem;
 }
+
+html.a11y-high-contrast body {
+  color: #111111;
+  background: #ffffff;
+}
+
+html.a11y-high-contrast #root .text-muted {
+  color: #1a1a1a !important;
+}
+
+html.a11y-high-contrast #root .bg-cream,
+html.a11y-high-contrast #root .bg-white {
+  background-color: #ffffff !important;
+}
+
+html.a11y-high-contrast #root .text-forest {
+  color: #143b29 !important;
+}
+
+html.a11y-high-contrast #root .bg-forest,
+html.a11y-high-contrast #root .bg-forest-dark {
+  background-color: #163f2b !important;
+}
+
+html.a11y-high-contrast #root .text-white,
+html.a11y-high-contrast #root .text-cream,
+html.a11y-high-contrast #root [class*="text-cream/"] {
+  color: #ffffff !important;
+}
+
+html.a11y-high-contrast #root .border-sand,
+html.a11y-high-contrast #root [class*="border-sand"],
+html.a11y-high-contrast #root [class*="border-forest"] {
+  border-color: #315c45 !important;
+}
+
+html.a11y-high-contrast #root input,
+html.a11y-high-contrast #root textarea,
+html.a11y-high-contrast #root select {
+  color: #111111 !important;
+  background-color: #ffffff !important;
+  border-color: #143b29 !important;
+}
+
+html.a11y-high-contrast #root a:not(.skip-link) {
+  text-underline-offset: 0.18em;
+}
+
+html.a11y-grayscale header,
+html.a11y-grayscale #main,
+html.a11y-grayscale footer {
+  filter: grayscale(1);
+}
+
+html.a11y-highlight-links #root a:not(.skip-link):not(.a11y-widget a) {
+  text-decoration: underline !important;
+  text-decoration-thickness: 0.18em !important;
+  text-underline-offset: 0.22em !important;
+  font-weight: 600 !important;
+}
+
+html.a11y-readable-font body,
+html.a11y-readable-font button,
+html.a11y-readable-font input,
+html.a11y-readable-font textarea,
+html.a11y-readable-font select,
+html.a11y-readable-font h1,
+html.a11y-readable-font h2,
+html.a11y-readable-font h3,
+html.a11y-readable-font h4,
+html.a11y-readable-font .font-display {
+  font-family: Arial, "Arial Hebrew", "Noto Sans Hebrew", sans-serif !important;
+  letter-spacing: normal !important;
+}
+
+html.a11y-line-spacing #root p,
+html.a11y-line-spacing #root li,
+html.a11y-line-spacing #root textarea {
+  line-height: 1.95 !important;
+}
+
+html.a11y-reduce-motion,
+html.a11y-reduce-motion * {
+  scroll-behavior: auto !important;
+}
+
+html.a11y-reduce-motion *,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}

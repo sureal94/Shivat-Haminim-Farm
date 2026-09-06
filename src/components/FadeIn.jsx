@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 
 export default function FadeIn({
   children,
@@ -7,7 +8,7 @@ export default function FadeIn({
   y = 24,
   as = 'div',
 }) {
-  const reduce = useReducedMotion()
+  const reduce = usePrefersReducedMotion()
   const Component = motion[as] || motion.div
 
   return (
