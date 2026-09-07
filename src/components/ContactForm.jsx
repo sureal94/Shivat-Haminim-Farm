@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
-import {
-  FORMSUBMIT_ACTION,
-  FORMSUBMIT_AJAX,
-  FORMSUBMIT_SUBJECT,
-} from '../lib/farmEmail'
+import { FORMSUBMIT_AJAX, FORMSUBMIT_SUBJECT } from '../lib/farmEmail'
 import Button from './Button'
 
 const empty = { name: '', email: '', phone: '', subject: '', message: '' }
+
+function isFormSubmitSuccess(data) {
+  return data?.success === true || data?.success === 'true'
+}
 
 export default function ContactForm() {
   const { t } = useLanguage()
@@ -22,6 +22,8 @@ export default function ContactForm() {
     e.preventDefault()
     setStatus('sending')
 
+    const { name, email, phone, subject, message } = values
+
     try {
       const res = await fetch(FORMSUBMIT_AJAX, {
         method: 'POST',
@@ -30,20 +32,20 @@ export default function ContactForm() {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          name: values.name,
-          email: values.email,
-          phone: values.phone,
-          subject: values.subject,
-          message: values.message,
+          name,
+          email,
+          phone,
+          subject,
+          message,
           _subject: FORMSUBMIT_SUBJECT,
-          _captcha: 'false',
-          _replyto: values.email,
+          _replyto: email,
         }),
       })
 
       const data = await res.json().catch(() => ({}))
-      const failed = !res.ok || data.success === false || data.success === 'false'
-      if (failed) throw new Error('Request failed')
+      if (!res.ok || !isFormSubmitSuccess(data)) {
+        throw new Error('Request failed')
+      }
 
       setValues(empty)
       setStatus('success')
@@ -63,15 +65,9 @@ export default function ContactForm() {
 
   return (
     <form
-      action={FORMSUBMIT_ACTION}
-      method="POST"
       onSubmit={onSubmit}
       className="rounded-3xl bg-white border border-sand/70 p-6 sm:p-8 shadow-soft space-y-5"
     >
-      <input type="hidden" name="_subject" value={FORMSUBMIT_SUBJECT} />
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_replyto" value={values.email} />
-
       <div className="grid sm:grid-cols-2 gap-5">
         <label className="block">
           <span className="text-sm font-medium text-forest">{t('name')}</span>
