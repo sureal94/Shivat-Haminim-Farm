@@ -1,18 +1,13 @@
-import { useLocation } from 'react-router-dom'
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import FadeIn from '../components/FadeIn'
 import SectionHeader from '../components/SectionHeader'
 import DonateButton from '../components/DonateButton'
-import DonationForm from '../components/DonationForm'
 import { farmImages } from '../data/images'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Donate() {
-  const { content: { donate, seo, site }, projects, t } = useLanguage()
-  const { hash } = useLocation()
-  const projectId = hash.replace('#', '')
-  const selectedProject = projects.find((project) => project.id === projectId)
+  const { content: { donate, seo }, projects, t } = useLanguage()
 
   return (
     <>
@@ -82,20 +77,6 @@ export default function Donate() {
             </p>
             <div className="mt-8 flex justify-center">
               <DonateButton />
-            </div>
-            <p className="mt-10 text-center text-muted leading-relaxed">
-              {selectedProject
-                ? t('projectRedirect', { project: selectedProject.title })
-                : t('paypalFormNote')}
-            </p>
-            <p className="mt-3 text-center text-sm text-earth">
-              {t('writeToGive')}{' '}
-              <a dir="ltr" className="underline font-semibold" href={`mailto:${site.contact.email}`}>
-                {site.contact.email}
-              </a>
-            </p>
-            <div className="mt-8">
-              <DonationForm projectId={selectedProject?.id} />
             </div>
           </FadeIn>
         </div>
