@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
-import { FARM_EMAIL, openFarmMailto } from '../lib/farmEmail'
+import {
+  FORMSUBMIT_ACTION,
+  FORMSUBMIT_AJAX,
+  FORMSUBMIT_SUBJECT,
+} from '../lib/farmEmail'
 import Button from './Button'
 
 const empty = { name: '', email: '', phone: '', subject: '', message: '' }
 
 export default function ContactForm() {
-  const { content: { site }, t } = useLanguage()
+  const { t } = useLanguage()
   const [values, setValues] = useState(empty)
   const [status, setStatus] = useState('idle')
-  const [error, setError] = useState('')
 
   const onChange = (e) => {
     setValues((v) => ({ ...v, [e.target.name]: e.target.value }))
@@ -17,25 +20,36 @@ export default function ContactForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    setError('')
     setStatus('sending')
 
-    if (site.contactEndpoint) {
-      try {
-        const res = await fetch(site.contactEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ ...values, to: FARM_EMAIL }),
-        })
-        if (!res.ok) throw new Error('Request failed')
-      } catch {
-        // The farm still receives the message through mailto below.
-      }
-    }
+    try {
+      const res = await fetch(FORMSUBMIT_AJAX, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          phone: values.phone,
+          subject: values.subject,
+          message: values.message,
+          _subject: FORMSUBMIT_SUBJECT,
+          _captcha: 'false',
+          _replyto: values.email,
+        }),
+      })
 
-    const body = [`${t('name')}: ${values.name}`, `${t('email')}: ${values.email}`, `${t('phone')}: ${values.phone}`, '', values.message].join('\n')
-    openFarmMailto(values.subject || t('mailSubject'), body)
-    setStatus('mailto')
+      const data = await res.json().catch(() => ({}))
+      const failed = !res.ok || data.success === false || data.success === 'false'
+      if (failed) throw new Error('Request failed')
+
+      setValues(empty)
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
   }
 
   if (status === 'success') {
@@ -48,7 +62,16 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-3xl bg-white border border-sand/70 p-6 sm:p-8 shadow-soft space-y-5">
+    <form
+      action={FORMSUBMIT_ACTION}
+      method="POST"
+      onSubmit={onSubmit}
+      className="rounded-3xl bg-white border border-sand/70 p-6 sm:p-8 shadow-soft space-y-5"
+    >
+      <input type="hidden" name="_subject" value={FORMSUBMIT_SUBJECT} />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_replyto" value={values.email} />
+
       <div className="grid sm:grid-cols-2 gap-5">
         <label className="block">
           <span className="text-sm font-medium text-forest">{t('name')}</span>
@@ -74,18 +97,7 @@ export default function ContactForm() {
       <Button type="submit" className="w-full sm:w-auto" disabled={status === 'sending'}>
         {status === 'sending' ? t('sending') : t('send')}
       </Button>
-      {status === 'mailto' ? (
-        <p className="text-sm text-muted" role="status">
-          {t('mailOpened')}{' '}
-          <a dir="ltr" className="underline" href={`mailto:${FARM_EMAIL}`}>{FARM_EMAIL}</a>
-        </p>
-      ) : null}
-      {status === 'error' ? <p className="text-sm text-terracotta" role="alert">{error}</p> : null}
-      {!site.contactEndpoint ? (
-        <p className="text-xs text-muted">
-          {t('serviceNote')}
-        </p>
-      ) : null}
+      {status === 'error' ? <p className="text-sm text-terracotta" role="alert">{t('failed')}</p> : null}
     </form>
   )
 }

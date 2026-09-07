@@ -1,6 +1,4 @@
 export const FARM_EMAIL = 'shivat.haminim.farm@gmail.com'
-
-export function openFarmMailto(subject, body) {
-  const url = `mailto:${FARM_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-  window.location.href = url
-}
+export const FORMSUBMIT_ACTION = `https://formsubmit.co/${FARM_EMAIL}`
+export const FORMSUBMIT_AJAX = `https://formsubmit.co/ajax/${FARM_EMAIL}`
+export const FORMSUBMIT_SUBJECT = 'New Contact Form Submission - Shivat Haminim Farm'

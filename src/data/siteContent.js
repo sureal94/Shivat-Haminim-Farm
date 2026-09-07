@@ -33,7 +33,6 @@ export const site = {
     },
   ],
   donationUrl: PAYPAL_DONATION_URL,
-  contactEndpoint: import.meta.env.VITE_CONTACT_ENDPOINT || '',
   siteUrl: import.meta.env.VITE_SITE_URL || 'https://www.example.com',
 }
 
