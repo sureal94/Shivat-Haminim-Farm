@@ -1,3 +1,5 @@
+import { PAYPAL_DONATION_URL } from '../lib/paypal'
+
 export const site = {
   name: 'Shivat Haminim Farm',
   hebrewName: 'חוות שבעת המינים',
@@ -30,7 +32,7 @@ export const site = {
       url: 'https://www.facebook.com/profile.php?id=100070722451063',
     },
   ],
-  donationUrl: import.meta.env.VITE_DONATION_URL || '',
+  donationUrl: PAYPAL_DONATION_URL,
   contactEndpoint: import.meta.env.VITE_CONTACT_ENDPOINT || '',
   siteUrl: import.meta.env.VITE_SITE_URL || 'https://www.example.com',
 }

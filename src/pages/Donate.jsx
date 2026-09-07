@@ -3,6 +3,7 @@ import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import FadeIn from '../components/FadeIn'
 import SectionHeader from '../components/SectionHeader'
+import DonateButton from '../components/DonateButton'
 import DonationForm from '../components/DonationForm'
 import { farmImages } from '../data/images'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -28,6 +29,10 @@ export default function Donate() {
               {donate.why.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
+            </div>
+            <p className="mt-6 text-muted leading-relaxed">{t('paypalIntro')}</p>
+            <div className="mt-8">
+              <DonateButton />
             </div>
           </FadeIn>
         </div>
@@ -73,9 +78,15 @@ export default function Donate() {
               {t('makeGift')}
             </h2>
             <p className="mt-4 text-center text-muted leading-relaxed">
+              {t('paypalIntro')}
+            </p>
+            <div className="mt-8 flex justify-center">
+              <DonateButton />
+            </div>
+            <p className="mt-10 text-center text-muted leading-relaxed">
               {selectedProject
                 ? t('projectRedirect', { project: selectedProject.title })
-                : t('donationUnavailable')}
+                : t('paypalFormNote')}
             </p>
             <p className="mt-3 text-center text-sm text-earth">
               {t('writeToGive')}{' '}
