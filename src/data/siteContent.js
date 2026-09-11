@@ -33,7 +33,7 @@ export const site = {
     },
   ],
   donationUrl: PAYPAL_DONATION_URL,
-  siteUrl: import.meta.env.VITE_SITE_URL || 'https://www.example.com',
+  siteUrl: import.meta.env.VITE_SITE_URL || 'https://shivathaminim.com',
 }
 
 export const navLinks = [

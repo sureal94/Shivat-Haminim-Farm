@@ -37,6 +37,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_SITE_URL: https://shivathaminim.com
 
       - name: Add SPA fallback for React Router
         run: cp dist/index.html dist/404.html
